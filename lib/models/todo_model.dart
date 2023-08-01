@@ -1,7 +1,7 @@
 class TodoModel {
   final String title;
   final String description;
-  final bool isRelevant;
+  bool isRelevant;
 
   TodoModel({
     required this.title,

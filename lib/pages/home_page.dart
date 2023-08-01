@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/todo_model.dart';
+import 'package:todo_app/redux/state/actions/update_relevancy_action.dart';
+import 'package:todo_app/redux/store.dart';
 import 'package:todo_app/widget/add_todo_alert_dialog.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,6 +20,7 @@ class HomePage extends StatelessWidget {
           "TODO APP",
           style: TextStyle(
             height: 16,
+            fontWeight: FontWeight.bold,
           ),
         ),
         centerTitle: true,
@@ -44,30 +47,34 @@ class HomePage extends StatelessWidget {
                       children: [
                         Text(
                           todos?[index].title ?? '',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                         Text(
                           todos?[index].description ?? '',
                         ),
-                        todos?[index].isRelevant == true
-                            ? const Icon(
-                                Icons.star,
-                                color: Colors.orange,
-                              )
-                            : const Icon(
-                                Icons.star_border,
-                                color: Colors.orange,
+                        GestureDetector(
+                          onTap: () {
+                            appStore.dispatch(
+                              UpdateRelevancyAction(
+                                todoModel: todos![index],
                               ),
+                            );
+                          },
+                          child: todos?[index].isRelevant == true
+                              ? const Icon(
+                                  Icons.star,
+                                  color: Colors.orange,
+                                )
+                              : const Icon(
+                                  Icons.star_border,
+                                  color: Colors.orange,
+                                ),
+                        ),
                       ],
                     ),
                   ),
-                ),
-              );
-              return ListTile(
-                leading: Text(
-                  todos?[index].title ?? '',
-                ),
-                trailing: Text(
-                  todos?[index].description ?? '',
                 ),
               );
             },
