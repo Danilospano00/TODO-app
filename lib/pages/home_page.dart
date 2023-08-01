@@ -27,6 +27,37 @@ class HomePage extends StatelessWidget {
       body: ListView.builder(
         itemCount: todos?.length,
         itemBuilder: (context, index) {
+          return SizedBox(
+            height: 80,
+            child: Card(
+              margin: const EdgeInsets.all(
+                16,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      todos?[index].title ?? '',
+                    ),
+                    Text(
+                      todos?[index].description ?? '',
+                    ),
+                    todos?[index].isRelevant == true
+                        ? const Icon(
+                            Icons.star,
+                          )
+                        : const Icon(
+                            Icons.star_border,
+                          ),
+                  ],
+                ),
+              ),
+            ),
+          );
           return ListTile(
             leading: Text(
               todos?[index].title ?? '',

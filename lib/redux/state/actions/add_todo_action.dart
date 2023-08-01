@@ -1,5 +1,6 @@
 import 'package:redux/redux.dart';
 import 'package:todo_app/models/todo_model.dart';
+import 'package:todo_app/redux/state/actions/update_todos_action.dart';
 import 'package:todo_app/redux/state/state.dart';
 
 class AddTodoAction {
@@ -25,5 +26,9 @@ void addTodosAction(
     isRelevant: action.isRelevant,
   );
 
-  store.state.todos.add(todoModel);
+  store.dispatch(
+    UpdateTodosAction(
+      todosList: [todoModel],
+    ),
+  );
 }

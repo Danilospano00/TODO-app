@@ -11,13 +11,15 @@ class AddTodoAlertDialogViewModel {
 
   factory AddTodoAlertDialogViewModel.create(Store<AppState> store) {
     return AddTodoAlertDialogViewModel(
-      addTodo: (title, desc, isRelevant) => store.dispatch(
-        AddTodoAction(
-          title: title,
-          description: desc,
-          isRelevant: isRelevant,
-        ),
-      ),
+      addTodo: (title, desc, isRelevant) {
+        store.dispatch(
+          AddTodoAction(
+            title: title,
+            description: desc,
+            isRelevant: isRelevant,
+          ),
+        );
+      },
     );
   }
 }
