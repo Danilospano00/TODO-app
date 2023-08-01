@@ -24,49 +24,58 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.grey,
         automaticallyImplyLeading: false,
       ),
-      body: ListView.builder(
-        itemCount: todos?.length,
-        itemBuilder: (context, index) {
-          return SizedBox(
+      body: ListView(
+        children: [
+          ...List.generate(
+            todos?.length ?? 0,
+            (index) {
+              return SizedBox(
+                height: 80,
+                child: Card(
+                  margin: const EdgeInsets.all(
+                    16,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          todos?[index].title ?? '',
+                        ),
+                        Text(
+                          todos?[index].description ?? '',
+                        ),
+                        todos?[index].isRelevant == true
+                            ? const Icon(
+                                Icons.star,
+                                color: Colors.orange,
+                              )
+                            : const Icon(
+                                Icons.star_border,
+                                color: Colors.orange,
+                              ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+              return ListTile(
+                leading: Text(
+                  todos?[index].title ?? '',
+                ),
+                trailing: Text(
+                  todos?[index].description ?? '',
+                ),
+              );
+            },
+          ),
+          const SizedBox(
             height: 80,
-            child: Card(
-              margin: const EdgeInsets.all(
-                16,
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      todos?[index].title ?? '',
-                    ),
-                    Text(
-                      todos?[index].description ?? '',
-                    ),
-                    todos?[index].isRelevant == true
-                        ? const Icon(
-                            Icons.star,
-                          )
-                        : const Icon(
-                            Icons.star_border,
-                          ),
-                  ],
-                ),
-              ),
-            ),
-          );
-          return ListTile(
-            leading: Text(
-              todos?[index].title ?? '',
-            ),
-            trailing: Text(
-              todos?[index].description ?? '',
-            ),
-          );
-        },
+          ),
+        ],
       ),
       floatingActionButton: GestureDetector(
         onTap: () async {
