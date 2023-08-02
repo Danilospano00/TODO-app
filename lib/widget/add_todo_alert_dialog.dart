@@ -15,15 +15,13 @@ class _AddTodoAlertDialogState extends State<AddTodoAlertDialog> {
 
   final TextEditingController descriptionTodo = TextEditingController();
 
-  bool isRelevant = false;
-
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, AddTodoAlertDialogViewModel>(
       converter: (store) => AddTodoAlertDialogViewModel.create(store),
       builder: (context, vm) => Card(
         margin: const EdgeInsets.symmetric(
-          vertical: 150,
+          vertical: 220,
           horizontal: 50,
         ),
         child: Padding(
@@ -36,32 +34,37 @@ class _AddTodoAlertDialogState extends State<AddTodoAlertDialog> {
             children: [
               const Text(
                 "Aggiungi TODO",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
                 textAlign: TextAlign.center,
-              ),
-              TextField(
-                controller: titleTodo,
-              ),
-              TextField(
-                controller: descriptionTodo,
               ),
               const SizedBox(
                 height: 16,
               ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isRelevant = !isRelevant;
-                  });
-                },
-                child: isRelevant
-                    ? const Icon(
-                        Icons.star,
-                        color: Colors.orange,
-                      )
-                    : const Icon(
-                        Icons.star_border,
-                        color: Colors.orange,
-                      ),
+              TextField(
+                controller: titleTodo,
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.fromLTRB(
+                    0,
+                    8,
+                    0,
+                    8,
+                  ),
+                  labelText: "Titolo",
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              TextField(
+                cursorHeight: 18,
+                controller: descriptionTodo,
+                decoration: const InputDecoration(
+                  contentPadding: EdgeInsets.all(8),
+                  labelText: "Descrizione",
+                ),
               ),
               const SizedBox(
                 height: 40,
@@ -79,12 +82,15 @@ class _AddTodoAlertDialogState extends State<AddTodoAlertDialog> {
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () {
-                      vm.addTodo(
-                        titleTodo.text,
-                        descriptionTodo.text,
-                        isRelevant,
-                      );
-                      Navigator.pop(context);
+                      if (titleTodo.text.isNotEmpty ||
+                          descriptionTodo.text.isNotEmpty) {
+                        vm.addTodo(
+                          titleTodo.text,
+                          descriptionTodo.text,
+                          false,
+                        );
+                        Navigator.pop(context);
+                      }
                     },
                     child: const Text(
                       "Aggiungi",
