@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:todo_app/pages/home_page_store_connector.dart';
-import 'package:todo_app/redux/state/actions/fetch_todos_action.dart';
 import 'package:todo_app/redux/store.dart';
 
 void main() {
@@ -13,24 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: appStore.dispatch(
-        FetchTodosAction(),
+    return StoreProvider(
+      store: appStore,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.white10),
+          useMaterial3: true,
+        ),
+        home: HomePageStoreConnector(),
       ),
-      builder: (context, snapshot) {
-        return StoreProvider(
-          store: appStore,
-          child: MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.white10),
-              useMaterial3: true,
-            ),
-            home: HomePageStoreConnector(),
-          ),
-        );
-      },
     );
   }
 }
