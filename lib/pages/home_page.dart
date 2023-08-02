@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.grey,
+        backgroundColor: Colors.red,
         automaticallyImplyLeading: false,
       ),
       body: ListView(
