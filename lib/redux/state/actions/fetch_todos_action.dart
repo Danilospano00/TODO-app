@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:redux/redux.dart';
 import 'package:todo_app/models/todo_model.dart';
 import 'package:todo_app/redux/state/actions/update_todos_action.dart';
@@ -10,7 +13,6 @@ void fetchTodosAction(
   FetchTodosAction action,
   next,
 ) async {
-  print("fetchTodosAction");
   final todo1 = TodoModel(
     title: "title1",
     description: "description1",
@@ -23,12 +25,22 @@ void fetchTodosAction(
     isRelevant: false,
   );
 
-  store.dispatch(
-    UpdateTodosAction(
-      todosList: [
-        todo1,
-        todo2,
-      ],
-    ),
-  );
+  try {
+    final response = await http.get(
+      Uri.parse("http://localhost:8080/getAll"),
+    );
+    print(response.body);
+    var userMap = jsonDecode(response.body);
+    List<TodoModel> todoList = [];
+    userMap.forEach((map) {
+      todoList.add(TodoModel.fromJson(map));
+    });
+    store.dispatch(
+      UpdateTodosAction(
+        todosList: todoList,
+      ),
+    );
+  } catch (e) {
+    throw Exception();
+  }
 }
